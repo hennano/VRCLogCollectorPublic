@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -14,7 +14,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Make gradlew executable
-        run: chmod +x ./gradlew
+        run:  call gradlew.bat
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with Gradle
