@@ -50,11 +50,6 @@ class EventTest {
         assertEquals("testVal2", (testMap["attributes"] as Map<*, *>)["testKey2"])
     }
 
-    @Test
-    fun failテスト(){
-        assertEquals("", "s")
-    }
-
     class TestEventNonAttribute(id: UUID, occurredAt: LocalDateTime, tags: List<Tag>) : Event(id, occurredAt, tags)
 
     class TestEventAttribute(id: UUID, occurredAt: LocalDateTime, tags: List<Tag>) : Event(id, occurredAt, tags){
