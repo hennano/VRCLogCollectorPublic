@@ -11,7 +11,7 @@ import java.util.*
  * @param occurredAt イベントの発生時刻
  * @param tags イベントに付与されたTagのリスト
  */
-abstract class Event(val id: UUID, val occurredAt: LocalDateTime, val tags: List<Tag>) {
+abstract class Event(val id: UUID, val occurredAt: LocalDateTime, val tags: List<Tag>, val priority: Priority): Comparable<Event>{
 
     /**
      * イベント名を返す
@@ -38,5 +38,13 @@ abstract class Event(val id: UUID, val occurredAt: LocalDateTime, val tags: List
             "occurred_at" to occurredAt.toEpochSecond(ZoneOffset.ofHours(9)),
             "attributes" to getAttributes()
         )
+    }
+
+    override fun compareTo(other: Event): Int {
+        var priority = this.priority.compareTo(other.priority)
+        if(priority == 0){
+            priority = this.occurredAt.compareTo(other.occurredAt)
+        }
+        return priority
     }
 }
