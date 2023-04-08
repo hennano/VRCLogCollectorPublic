@@ -6,10 +6,12 @@ import java.util.*
 
 /**
  * Event クラス
+ * イベント情報を保持する
  *
  * @param id イベントの固有ID
  * @param occurredAt イベントの発生時刻
  * @param tags イベントに付与されたTagのリスト
+ * @param priority イベントの処理優先度
  */
 abstract class Event(val id: UUID, val occurredAt: LocalDateTime, val tags: List<Tag>, val priority: Priority): Comparable<Event>{
 
