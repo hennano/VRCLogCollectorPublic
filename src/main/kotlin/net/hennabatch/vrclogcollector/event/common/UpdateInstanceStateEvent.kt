@@ -15,7 +15,7 @@ import java.util.UUID
  * @param launchId VRCLogCollector起動時に割り当てられるID
  * @param instanceId 参加したインスタンスのID
  * @param joinId インスタンス参加時に割り当てられるID 同一インスタンスであっても参加毎に変更される
- * @param updatedBy UpdateInstanceStateEventが発行される原因になったイベント
+ * @param updatedById UpdateInstanceStateEventが発行される原因になったイベントのID
  * @param world 参加したインスタンスのワールド名
  * @param players 参加したインスタンスにいるプレイヤー名のリスト
  */
@@ -27,7 +27,7 @@ class UpdateInstanceStateEvent(
     val launchId: UUID,
     val instanceId: UUID,
     val joinId: UUID,
-    val updatedBy: Event,
+    val updatedById: UUID,
     val world: String,
     val players: List<String>
 ) : Event(id, occurredAt, tags, priority) {
@@ -37,7 +37,7 @@ class UpdateInstanceStateEvent(
             "launch_uuid" to launchId,
             "instance_uuid" to instanceId,
             "join_uuid" to joinId,
-            "updated_by_uuid" to updatedBy.id,
+            "updated_by_uuid" to updatedById,
             "world" to world,
             "players" to players
         )

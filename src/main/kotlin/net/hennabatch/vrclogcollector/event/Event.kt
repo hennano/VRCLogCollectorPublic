@@ -37,7 +37,7 @@ abstract class Event(val id: UUID, val occurredAt: LocalDateTime, val tags: List
         return mapOf(
             "id" to id,
             "event_name" to getEventName(),
-            "occurred_at" to occurredAt.toEpochSecond(ZoneOffset.ofHours(9)),
+            "occurred_at" to occurredAt,
             "attributes" to getAttributes()
         )
     }

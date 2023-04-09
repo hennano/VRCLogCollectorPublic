@@ -1,11 +1,9 @@
 package net.hennabatch.vrclogcollector.event
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import net.hennabatch.vrclogcollector.common.util.logger
 import net.hennabatch.vrclogcollector.event.common.UpdateInstanceStateEvent
+import java.lang.Runnable
 import java.util.concurrent.PriorityBlockingQueue
 import java.util.concurrent.TimeUnit
 
@@ -21,7 +19,11 @@ class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, pr
     private var activateShutDown = false
     private var continuePoll = true
     private var currentState: UpdateInstanceStateEvent? = null
-    private val scope = CoroutineScope(Job() + Dispatchers.Default)
+    private val exceptionHandler: CoroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+        //更に外側へ伝播させる
+        throw throwable
+    }
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     override fun run() {
         while (continuePoll) {
             val event = eventPublishedQueue.poll(5, TimeUnit.MINUTES)
@@ -62,7 +64,7 @@ class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, pr
                 eventSubscribers.filter { it.isTargetEvent(event) }
                     .forEach { subscribers ->
                         currentState?.let { state ->
-                            scope.launch {
+                            scope.launch(exceptionHandler) {
                                 subscribers.execute(event, state)
                             }
                         }
