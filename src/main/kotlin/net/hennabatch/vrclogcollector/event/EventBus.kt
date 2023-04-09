@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  * @param eventPublishedQueue EventPublisherで発行されたEventを受け取るqueue
  * @param eventSubscribers EventBusをサブスクライブしているEventSubscriberのリスト
  */
-class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, private val eventSubscribers: List<EventSubscriber>): Runnable{
+class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, private val eventSubscribers: List<EventSubscriber>, private val timeout: Long = 5): Runnable{
     private var activateShutDown = false
     private var continuePoll = true
     private var currentState: UpdateInstanceStateEvent? = null
@@ -28,10 +28,9 @@ class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, pr
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     override fun run() {
         while (continuePoll) {
-            val event = eventPublishedQueue.poll(5, TimeUnit.MINUTES)
+            val event = eventPublishedQueue.poll(timeout, TimeUnit.MINUTES)
 
-            //TODO イベントの優先度に従ってログレベルを変える
-            event?.let { logger.info(event.toMap().toString()) }
+            showLog(event)
 
             when (event) {
                 is QuitVRCEvent -> {
@@ -73,5 +72,10 @@ class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, pr
         }
         //終了処理
         eventSubscribers.forEach { it.onExit() }
+    }
+
+    private fun showLog(event: Event?){
+        //TODO イベントの優先度に従ってログレベルを変える
+        event?.let { logger.info(event.toMap().toString()) }
     }
 }
