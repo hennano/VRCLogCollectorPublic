@@ -2,6 +2,8 @@ package net.hennabatch.vrclogcollector.event
 
 import kotlinx.coroutines.*
 import net.hennabatch.vrclogcollector.common.util.logger
+import net.hennabatch.vrclogcollector.event.common.LaunchVRCEvent
+import net.hennabatch.vrclogcollector.event.common.QuitVRCEvent
 import net.hennabatch.vrclogcollector.event.common.UpdateInstanceStateEvent
 import java.lang.Runnable
 import java.util.concurrent.PriorityBlockingQueue
@@ -32,7 +34,6 @@ class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, pr
             event?.let { logger.info(event.toMap().toString()) }
 
             when (event) {
-                /*
                 is QuitVRCEvent -> {
                     //シャットダウンを有効化
                     activateShutDown = true
@@ -47,7 +48,6 @@ class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, pr
                     }
                     eventSubscribers.forEach { it.onLaunchVRC() }
                 }
-                 */
                 is UpdateInstanceStateEvent -> {
                     currentState = event
                 }
