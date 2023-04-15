@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "1.8.0"
-    //kotlin("plugin.serialization") version "1.6.10"
+    kotlin("plugin.serialization") version "1.6.10"
     id("org.jetbrains.dokka") version "1.8.10"
     application
 }
@@ -25,7 +25,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     //テスト用など
-    testImplementation(kotlin("test"))
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.20-RC")
     testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
     testImplementation("io.mockk:mockk:1.13.4")
 }
