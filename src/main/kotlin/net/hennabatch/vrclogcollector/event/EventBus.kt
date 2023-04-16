@@ -28,7 +28,7 @@ class EventBus(private val eventPublishedQueue: PriorityBlockingQueue<Event>, pr
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     override fun run() {
         while (continuePoll) {
-            val event = eventPublishedQueue.poll(timeout, TimeUnit.MINUTES)
+            val event = eventPublishedQueue.poll(timeout, TimeUnit.SECONDS)
 
             showLog(event)
 

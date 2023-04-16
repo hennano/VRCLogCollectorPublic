@@ -154,7 +154,7 @@ class EventBusTest: FunSpec ({
             verify(exactly = 1){
                 testSubscriber.onQuitVRC()
             }
-            Thread.sleep(1000 * 70)
+            Thread.sleep(2000)
             verify(exactly = 1){
                 testSubscriber.onExit()
             }
@@ -183,7 +183,7 @@ class EventBusTest: FunSpec ({
             every { testSubscriber.onQuitVRC() } returns Unit
             every { testSubscriber.onExit() } returns Unit
             val eventQueue = PriorityBlockingQueue<Event>()
-            val eventBus = EventBus(eventQueue, listOf(testSubscriber), 1)
+            val eventBus = EventBus(eventQueue, listOf(testSubscriber), 10)
             val thread = Thread(eventBus)
 
             //実行
@@ -196,16 +196,16 @@ class EventBusTest: FunSpec ({
                 testSubscriber.onQuitVRC()
             }
             //VRC終了後のイベント
-            Thread.sleep(1000 * 10)
+            Thread.sleep(5000)
             eventQueue.add(testEvent)
-            //VRC終了後から65s, 最後のイベントから55s
-            Thread.sleep(1000 * 55)
+            //VRC終了後から12.5s, 最後のイベントから7.5s
+            Thread.sleep(7500)
             verify(exactly = 0){
                 testSubscriber.onExit()
             }
             thread.isAlive.shouldBeTrue()
-            //更に10s待機
-            Thread.sleep(1000 * 10)
+            //更に5s待機
+            Thread.sleep(5000)
             verify(exactly = 1){
                 testSubscriber.onExit()
             }
@@ -236,7 +236,7 @@ class EventBusTest: FunSpec ({
                 testSubscriber.onQuitVRC()
                 testSubscriber.onLaunchVRC()
             }
-            Thread.sleep(1000 * 70)
+            Thread.sleep(2000)
             verify(exactly = 0){
                 testSubscriber.onExit()
             }
@@ -263,7 +263,7 @@ class EventBusTest: FunSpec ({
             every { testSubscriber.isTargetEvent(testEvent) } returns true
             every { testSubscriber.execute(any(), updateInstanceState) } throws Exception()
             val eventQueue = PriorityBlockingQueue<Event>()
-            val eventBus = EventBus(eventQueue, listOf(testSubscriber), 1)
+            val eventBus = EventBus(eventQueue, listOf(testSubscriber), 10)
             val thread = Thread(eventBus)
 
             //実行
@@ -273,7 +273,7 @@ class EventBusTest: FunSpec ({
 
             shouldThrowAny {
                 thread.start()
-                Thread.sleep(10000)
+                Thread.sleep(15000)
             }
         }
     }

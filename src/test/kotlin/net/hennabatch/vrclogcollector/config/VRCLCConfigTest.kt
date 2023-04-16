@@ -20,6 +20,7 @@ class VRCLCConfigTest: FunSpec({
             configTest.activateLogReader.shouldBeTrue()
             configTest.activateOSCListener.shouldBeTrue()
             configTest.activateNotify.shouldBeTrue()
+            configTest.eventPollingTimeoutSecond shouldBe 300
             configTest.lockFilePath shouldBe "${System.getProperty("user.dir")}\\vrc-log-collector-lock.lock"
             configTest.pluginDirectoryPath shouldBe "${System.getProperty("user.dir")}\\plugins"
 
@@ -34,6 +35,7 @@ class VRCLCConfigTest: FunSpec({
                     "activateLogReader": false,
                     "activateOSCListener": false,
                     "activateNotify": false,
+                    "eventPollingTimeoutSecond": 60,
                     "lockFilePath": "test\/path",
                     "pluginDirectoryPath": "test\/path\/tete",
                     "logReader": {},
@@ -47,6 +49,7 @@ class VRCLCConfigTest: FunSpec({
             configTest.activateLogReader.shouldBeFalse()
             configTest.activateOSCListener.shouldBeFalse()
             configTest.activateNotify.shouldBeFalse()
+            configTest.eventPollingTimeoutSecond shouldBe 60
             configTest.lockFilePath shouldBe "test/path"
             configTest.pluginDirectoryPath shouldBe "test/path/tete"
 
@@ -64,6 +67,7 @@ class VRCLCConfigTest: FunSpec({
             configTest.activateLogReader.shouldBeTrue()
             configTest.activateOSCListener.shouldBeTrue()
             configTest.activateNotify.shouldBeTrue()
+            configTest.eventPollingTimeoutSecond shouldBe 300
             configTest.lockFilePath shouldBe "${System.getProperty("user.dir")}\\vrc-log-collector-lock.lock"
             configTest.pluginDirectoryPath shouldBe "${System.getProperty("user.dir")}\\plugins"
 

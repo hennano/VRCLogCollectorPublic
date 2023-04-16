@@ -22,7 +22,7 @@ data class VRCLCConfig(
     var activateLogReader: Boolean = true,
     var activateOSCListener: Boolean = true,
     var activateNotify: Boolean = true,
-    var eventPollingTimeout: Long = 300,
+    var eventPollingTimeoutSecond: Long = 300,
     var lockFilePath: String = "${System.getProperty("user.dir")}\\vrc-log-collector-lock.lock",
     var pluginDirectoryPath: String = "${System.getProperty("user.dir")}\\plugins",
 
