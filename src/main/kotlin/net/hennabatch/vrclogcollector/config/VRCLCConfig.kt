@@ -10,7 +10,7 @@ import net.hennabatch.vrclogcollector.config.vrclc.OSCListenerConfig
  * @param activateLogReader ログ解析機能の有効化
  * @param activateOSCListener OSC機能の有効化
  * @param activateNotify 通知機能の有効化
- * @param eventPollingTimeout VRC終了後のイベント待機時間
+ * @param eventPollingTimeoutSecond VRC終了後のイベント待機時間
  * @param lockFilePath ロックファイルのパス
  * @param pluginDirectoryPath プラグインディレクトリのパス
  * @param logReader LogReaderに関する設定
