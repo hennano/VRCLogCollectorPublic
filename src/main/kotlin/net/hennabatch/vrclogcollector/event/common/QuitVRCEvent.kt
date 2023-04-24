@@ -6,6 +6,15 @@ import net.hennabatch.vrclogcollector.event.Tag
 import java.time.LocalDateTime
 import java.util.UUID
 
+/**
+ * QuitVRCEvent クラス
+ * VRC終了時に発行されるイベント
+ * @param id イベントの固有ID
+ * @param occurredAt イベントの発生時刻
+ * @param tags イベントに付与されたTagのリスト
+ * @param priority イベントの処理優先度
+ * @param launchId VRCLogCollector起動時に割り当てられるID
+ */
 class QuitVRCEvent(
     id: UUID = UUID.randomUUID(),
     occurredAt: LocalDateTime = LocalDateTime.now(),

@@ -7,7 +7,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 /**
- * UpdateInstanceStateEvent インスタンス状況が更新された際に発行されるイベント
+ * UpdateInstanceStateEvent クラス
+ * インスタンス状況が更新された際に発行されるイベント
  * @param id イベントの固有ID
  * @param occurredAt イベントの発生時刻
  * @param tags イベントに付与されたTagのリスト
