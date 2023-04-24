@@ -1,6 +1,8 @@
 package net.hennabatch.vrclogcollector.event
 
+import net.hennabatch.vrclogcollector.event.common.SendNotifyEvent
 import net.hennabatch.vrclogcollector.event.common.UpdateInstanceStateEvent
+import net.hennabatch.vrclogcollector.vrclog.Message
 import java.util.concurrent.PriorityBlockingQueue
 
 /**
@@ -44,10 +46,24 @@ abstract class EventSubscriber (private val eventQueue: PriorityBlockingQueue<Ev
 
     /**
      * 通知を送信する
-     * @param sendNotifyEvent 送信する通知イベント
-     * TODO SendNotifyEventに差し替える
+     * @param message 送信するメッセージ
+     * @param force 通知がOSCで無効化されていても通知を行うか
      */
-    protected fun sendNotify(sendNotifyEvent: Event){
-        eventQueue.add(sendNotifyEvent)
+    protected fun sendNotify(message: Message, force: Boolean = false){
+        eventQueue.add(
+            SendNotifyEvent(
+                message = message,
+                force = force
+            )
+        )
+    }
+
+    /**
+     * イベントを発行する
+     * @param event 発行するイベント
+     */
+    @Deprecated(message = "イベントの発行用途のみで利用する場合はEventPublisherの利用を推奨", level = DeprecationLevel.WARNING)
+    protected fun publishEvent(event: Event){
+        eventQueue.add(event)
     }
 }

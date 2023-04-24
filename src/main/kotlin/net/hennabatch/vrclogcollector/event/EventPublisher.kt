@@ -11,7 +11,7 @@ import java.util.concurrent.PriorityBlockingQueue
 abstract class EventPublisher(private val eventQueue: PriorityBlockingQueue<Event>) {
 
     /**
-     * 実行時に呼ばれる
+     * VRCLogCollector起動時に呼ばれる
      */
     open fun onStart(){}
 
@@ -19,6 +19,7 @@ abstract class EventPublisher(private val eventQueue: PriorityBlockingQueue<Even
      * VRCLogCollector終了時に呼ばれる
      */
     open fun onExit(){}
+
 
     /**
      * イベントを発行する
