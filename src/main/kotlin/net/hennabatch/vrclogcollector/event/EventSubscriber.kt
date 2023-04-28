@@ -2,7 +2,7 @@ package net.hennabatch.vrclogcollector.event
 
 import net.hennabatch.vrclogcollector.event.common.SendNotifyEvent
 import net.hennabatch.vrclogcollector.event.common.UpdateInstanceStateEvent
-import net.hennabatch.vrclogcollector.vrclog.Message
+import net.hennabatch.vrclogcollector.notifier.Message
 import java.util.concurrent.PriorityBlockingQueue
 
 /**

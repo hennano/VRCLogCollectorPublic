@@ -27,6 +27,7 @@ dependencies {
     //テスト用など
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.20-RC")
     testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
+    testImplementation("io.kotest:kotest-assertions-json-jvm:5.5.5")
     testImplementation("io.mockk:mockk:1.13.4")
 }
 

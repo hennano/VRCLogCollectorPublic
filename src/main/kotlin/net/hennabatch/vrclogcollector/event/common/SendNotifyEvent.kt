@@ -3,7 +3,7 @@ package net.hennabatch.vrclogcollector.event.common
 import net.hennabatch.vrclogcollector.event.Event
 import net.hennabatch.vrclogcollector.event.Priority
 import net.hennabatch.vrclogcollector.event.Tag
-import net.hennabatch.vrclogcollector.vrclog.Message
+import net.hennabatch.vrclogcollector.notifier.Message
 import java.time.LocalDateTime
 import java.util.*
 
@@ -15,7 +15,7 @@ import java.util.*
  * @param tags イベントに付与されたTagのリスト
  * @param priority イベントの処理優先度
  * @param message 通知の内容
- * @param force 通知強制的に行うか
+ * @param force 通知を強制的に行うか
  */
 class SendNotifyEvent(
     id: UUID = UUID.randomUUID(),
