@@ -8,8 +8,9 @@ import java.util.concurrent.TransferQueue
  * NotificationDispatcher クラス
  * 通知の送信を管理するクラス
  * @param messageQueue メッセージのキュー
+ * @param isActivated 通知機能を有効化するか
  */
-class NotificationDispatcher(val messageQueue: TransferQueue<Message> = LinkedTransferQueue()): Runnable{
+class NotificationDispatcher(val messageQueue: TransferQueue<Message> = LinkedTransferQueue(), var isActivated: Boolean = true): Runnable{
     private val sendNotifiers = mutableListOf<Notifier>()
 
     /**
@@ -41,8 +42,11 @@ class NotificationDispatcher(val messageQueue: TransferQueue<Message> = LinkedTr
         try{
             while (!Thread.interrupted()){
                 val message = messageQueue.take()
-                sendNotifiers.forEach{
-                    it.send(message)
+                logger.debug("polled message: ${message.type}, ${message.title}, ${message.content}, ${message.forcedNotify}")
+                if( isActivated || message.forcedNotify){
+                    sendNotifiers.forEach{
+                        it.send(message)
+                    }
                 }
             }
         }catch (_: InterruptedException){}

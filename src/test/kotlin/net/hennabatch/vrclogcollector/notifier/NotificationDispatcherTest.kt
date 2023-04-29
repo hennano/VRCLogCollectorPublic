@@ -94,6 +94,65 @@ class NotificationDispatcherTest: FunSpec({
 
             thread.interrupt()
         }
+
+        test("通知の無効化"){
+            //準備
+            val testNotifier = mockkClass(Notifier::class)
+            every { testNotifier.send(any()) } returns Unit
+
+            val testMessage = Message(MessageType.INFO, "testTitle", "testContent")
+
+            //実行
+            val dispatcher = NotificationDispatcher()
+            dispatcher.addNotifier(testNotifier)
+            dispatcher.isActivated = false
+            val thread = Thread(dispatcher)
+            val queue = dispatcher.messageQueue
+
+            queue.add(testMessage)
+            thread.start()
+            Thread.sleep(1000)
+
+            //テスト
+            verify(exactly = 0) {
+                testNotifier.send(testMessage)
+            }
+            queue.shouldBeEmpty()
+
+            thread.interrupt()
+        }
+
+        test("強制通知"){
+            //準備
+            val testNotifier = mockkClass(Notifier::class)
+            every { testNotifier.send(any()) } returns Unit
+
+            val testMessage = Message(MessageType.INFO, "testTitle", "testContent")
+            val testMessageForce = Message(MessageType.INFO, "testTitle", "testContent", forcedNotify = true)
+
+            //実行
+            val dispatcher = NotificationDispatcher()
+            dispatcher.addNotifier(testNotifier)
+            dispatcher.isActivated = false
+            val thread = Thread(dispatcher)
+            val queue = dispatcher.messageQueue
+
+            queue.add(testMessage)
+            queue.add(testMessageForce)
+            thread.start()
+            Thread.sleep(1000)
+
+            //テスト
+            verify(exactly = 0) {
+                testNotifier.send(testMessage)
+            }
+            verify(exactly = 1) {
+                testNotifier.send(testMessageForce)
+            }
+            queue.shouldBeEmpty()
+
+            thread.interrupt()
+        }
     }
 
     context("異常系"){

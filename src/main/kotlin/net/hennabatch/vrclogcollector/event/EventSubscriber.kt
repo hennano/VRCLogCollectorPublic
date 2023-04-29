@@ -4,14 +4,16 @@ import net.hennabatch.vrclogcollector.event.common.SendNotifyEvent
 import net.hennabatch.vrclogcollector.event.common.UpdateInstanceStateEvent
 import net.hennabatch.vrclogcollector.notifier.Message
 import java.util.concurrent.PriorityBlockingQueue
+import java.util.concurrent.TransferQueue
 
 /**
  * EventSubscriber クラス
  * EventBusからイベントを受け取って処理を行う
  *
  * @param eventQueue イベント発行先キュー
+ * @param messageQueue 通知発行先キュー
  */
-abstract class EventSubscriber (private val eventQueue: PriorityBlockingQueue<Event>){
+abstract class EventSubscriber (private val eventQueue: PriorityBlockingQueue<Event>, private val messageQueue: TransferQueue<Message>){
 
     /**
      * VRCが起動した際に呼ばれる
@@ -47,15 +49,9 @@ abstract class EventSubscriber (private val eventQueue: PriorityBlockingQueue<Ev
     /**
      * 通知を送信する
      * @param message 送信するメッセージ
-     * @param force 通知がOSCで無効化されていても通知を行うか
      */
-    protected fun sendNotify(message: Message, force: Boolean = false){
-        eventQueue.add(
-            SendNotifyEvent(
-                message = message,
-                force = force
-            )
-        )
+    protected fun sendNotify(message: Message){
+        messageQueue.add(message)
     }
 
     /**
