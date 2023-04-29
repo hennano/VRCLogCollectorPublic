@@ -1,11 +1,12 @@
-package net.hennabatch.vrclogcollector.notifier
+package net.hennabatch.vrclogcollector.notifier.xsoverlay
 
 import io.kotest.assertions.json.shouldBeValidJson
 import io.kotest.assertions.json.shouldEqualJson
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.style.FunSpec
 import kotlinx.coroutines.async
-import net.hennabatch.vrclogcollector.notifier.xsoverlay.XSOverlayNotifier
+import net.hennabatch.vrclogcollector.notifier.Message
+import net.hennabatch.vrclogcollector.notifier.MessageType
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
