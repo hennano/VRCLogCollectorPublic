@@ -11,7 +11,7 @@ import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
 
-
+@OptIn(io.kotest.common.ExperimentalKotest::class)
 class XSOverlayNotifierTest: FunSpec( {
     context("正常系"){
 

@@ -47,7 +47,6 @@ class XSOverlayNotifier(private val ip: InetAddress, private val port: Int): Not
         var socket: DatagramSocket? = null
         try {
             socket = DatagramSocket()
-            logger.debug(Json.encodeToString(xsoMessage))
             val data = Json{ encodeDefaults = true }.encodeToString(xsoMessage).toByteArray(Charset.forName("utf-8"))
             socket.soTimeout = 100
             socket.send(DatagramPacket(data, data.size, ip, port))

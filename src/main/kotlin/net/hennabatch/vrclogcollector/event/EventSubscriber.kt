@@ -13,7 +13,7 @@ import java.util.concurrent.TransferQueue
  * @param eventQueue イベント発行先キュー
  * @param messageQueue 通知発行先キュー
  */
-abstract class EventSubscriber (private val eventQueue: PriorityBlockingQueue<Event>, private val messageQueue: TransferQueue<Message>){
+abstract class EventSubscriber (private val eventQueue: PriorityBlockingQueue<Event>, private val messageQueue: TransferQueue<Pair<Message, Boolean>>){
 
     /**
      * VRCが起動した際に呼ばれる
@@ -49,9 +49,10 @@ abstract class EventSubscriber (private val eventQueue: PriorityBlockingQueue<Ev
     /**
      * 通知を送信する
      * @param message 送信するメッセージ
+     * @param forcedNotify 通知を強制するか
      */
-    protected fun sendNotify(message: Message){
-        messageQueue.add(message)
+    protected fun sendNotify(message: Message, forcedNotify: Boolean = false){
+        messageQueue.add(message to forcedNotify)
     }
 
     /**

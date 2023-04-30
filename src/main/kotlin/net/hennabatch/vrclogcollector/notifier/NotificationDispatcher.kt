@@ -10,7 +10,7 @@ import java.util.concurrent.TransferQueue
  * @param messageQueue メッセージのキュー
  * @param isActivated 通知機能を有効化するか
  */
-class NotificationDispatcher(val messageQueue: TransferQueue<Message> = LinkedTransferQueue(), var isActivated: Boolean = true): Runnable{
+class NotificationDispatcher(val messageQueue: TransferQueue<Pair<Message, Boolean>> = LinkedTransferQueue(), var isActivated: Boolean = true): Runnable{
     private val sendNotifiers = mutableListOf<Notifier>()
 
     /**
@@ -41,9 +41,15 @@ class NotificationDispatcher(val messageQueue: TransferQueue<Message> = LinkedTr
     override fun run() {
         try{
             while (!Thread.interrupted()){
-                val message = messageQueue.take()
-                logger.debug("polled message: ${message.type}, ${message.title}, ${message.content}, ${message.forcedNotify}")
-                if( isActivated || message.forcedNotify){
+                val (message, forcedNotify) = messageQueue.take()
+                logger.debug(
+                    "polled message: {}, {}, {}, {}",
+                    message.type,
+                    message.title,
+                    message.content,
+                    forcedNotify
+                )
+                if( isActivated || forcedNotify){
                     sendNotifiers.forEach{
                         it.send(message)
                     }

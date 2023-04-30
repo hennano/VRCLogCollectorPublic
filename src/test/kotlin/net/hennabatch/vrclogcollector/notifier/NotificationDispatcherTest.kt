@@ -22,7 +22,7 @@ class NotificationDispatcherTest: FunSpec({
             val thread = Thread(dispatcher)
             val queue = dispatcher.messageQueue
 
-            queue.add(testMessage)
+            queue.add(testMessage to false)
             thread.start()
             Thread.sleep(1000)
 
@@ -51,7 +51,7 @@ class NotificationDispatcherTest: FunSpec({
             val thread = Thread(dispatcher)
             val queue = dispatcher.messageQueue
 
-            queue.add(testMessage)
+            queue.add(testMessage to false)
             thread.start()
             Thread.sleep(1000)
 
@@ -80,8 +80,8 @@ class NotificationDispatcherTest: FunSpec({
             val thread = Thread(dispatcher)
             val queue = dispatcher.messageQueue
 
-            queue.add(testMessage1)
-            queue.add(testMessage2)
+            queue.add(testMessage1 to false)
+            queue.add(testMessage2 to false)
             thread.start()
             Thread.sleep(1000)
 
@@ -109,7 +109,7 @@ class NotificationDispatcherTest: FunSpec({
             val thread = Thread(dispatcher)
             val queue = dispatcher.messageQueue
 
-            queue.add(testMessage)
+            queue.add(testMessage to false)
             thread.start()
             Thread.sleep(1000)
 
@@ -128,7 +128,7 @@ class NotificationDispatcherTest: FunSpec({
             every { testNotifier.send(any()) } returns Unit
 
             val testMessage = Message(MessageType.INFO, "testTitle", "testContent")
-            val testMessageForce = Message(MessageType.INFO, "testTitle", "testContent", forcedNotify = true)
+            val testMessageForce = Message(MessageType.INFO, "testTitle", "testContent")
 
             //実行
             val dispatcher = NotificationDispatcher()
@@ -137,8 +137,8 @@ class NotificationDispatcherTest: FunSpec({
             val thread = Thread(dispatcher)
             val queue = dispatcher.messageQueue
 
-            queue.add(testMessage)
-            queue.add(testMessageForce)
+            queue.add(testMessage to false)
+            queue.add(testMessageForce to true)
             thread.start()
             Thread.sleep(1000)
 
@@ -169,7 +169,7 @@ class NotificationDispatcherTest: FunSpec({
             val thread = Thread(dispatcher)
             val queue = dispatcher.messageQueue
 
-            queue.add(testMessage)
+            queue.add(testMessage to false)
             thread.start()
             Thread.sleep(1000)
 
