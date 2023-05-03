@@ -45,7 +45,7 @@ object Config {
      * @param vrclcConfigPath 本体のコンフィグファイルパス
      */
     private fun makeDefaultConfigFile(vrclcConfigPath: Path){
-        val jsonText = Json.encodeToString(VRCLCConfig())
+        val jsonText = Json{ encodeDefaults = true }.encodeToString(VRCLCConfig())
         vrclcConfigPath.toFile().writeText(jsonText, Charsets.UTF_8)
     }
 
@@ -56,7 +56,7 @@ object Config {
     @OptIn(ExperimentalSerializationApi::class)
     private fun readConfigFile(vrclcConfigPath: Path):VRCLCConfig{
         val stream = vrclcConfigPath.toFile().inputStream()
-        val vrclcConfig =  Json{ encodeDefaults = true }.decodeFromStream<VRCLCConfig>(stream)
+        val vrclcConfig =  Json.decodeFromStream<VRCLCConfig>(stream)
         stream.close()
         return vrclcConfig
     }
